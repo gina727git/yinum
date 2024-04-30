@@ -11,6 +11,12 @@
     <script src="./scripts/yiNumLayout.js"></script>
     <script>
 
+        document.addEventListener("keydown", function(event) {
+            if (event.keyCode === 13) {
+                document.getElementById("calculateBtn").click();
+            }
+        });
+
         function calculate(){
           const calcService = new CalcService();
           const layoutService = new LayoutService();
@@ -76,8 +82,10 @@
             </div>
             <div>
                 <br>
-                <button class="source-button btn btn-primary btn-xs" type="button" tabindex="0" onclick="calculate()"><i class="bi bi-code"></i>立即測算</button>
-            </div>
+                <button id="calculateBtn" class="source-button btn btn-primary btn-xs" type="button" tabindex="0" onclick="calculate()"><i class="bi bi-code"></i>立即測算</button>
+                <br>
+                <br>
+              </div>
           </form>
         </div>
         </div>
@@ -94,4 +102,18 @@
     </div>
 
     </body>
+       
+    <footer id="footer">
+      <div class="row">
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Made by <a href="https://github.com/gina727git/yinum" target="_blank">Gina Huang</a>.
+          Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>.</p>
+          <p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a href="https://icons.getbootstrap.com/" rel="nofollow">Bootstrap Icons</a>. Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+
+        </div>
+      </div>
+    </footer>
 </html>
