@@ -343,10 +343,25 @@ function createCycleTableContent(tableBody, startValue, interval, numberOfRows, 
     })
     </script>
 </body>
+<footer id="footer">
+    <div class="row">
+      <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <p id="copyright">
+          &copy; <span id="currentYear"></span> Gina Huang. All rights reserved.
+        </p>
+        <p>Made by <a href="https://github.com/gina727git/yinum" target="_blank">Gina Huang</a>.
+        Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>.</p>
+        <p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a href="https://icons.getbootstrap.com/" rel="nofollow">Bootstrap Icons</a>. Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
 
-<footer></footer>
-<script>
-     const layoutService = new LayoutService();
-     layoutService.loadFooter();
-</script>
+      </div>
+    </div>
+  </footer>
+  <script>
+      const currentYear = new Date().getFullYear();
+      document.getElementById("currentYear").textContent = currentYear;
+
+  </script>
 </html>

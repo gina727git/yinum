@@ -3,19 +3,6 @@ class LayoutService {
     constructor() {
     }
 
-    loadFooter(){
-      window.addEventListener('DOMContentLoaded', function() {
-        const footerContainer = document.getElementsByTagName('footer');
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', './common/footer.html', true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                footerContainer.innerHTML = xhr.responseText;
-            }
-        };
-        xhr.send();
-    });
-    }
 
     cleanTable(divId) {
         const resultDiv = document.getElementById(divId)
