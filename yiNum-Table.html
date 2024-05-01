@@ -23,7 +23,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 800px;
         }
         table {
             border-collapse: collapse; /* 合并表格边框 */
@@ -205,28 +204,18 @@ function createCycleTableContent(tableBody, startValue, interval, numberOfRows, 
             </div>
           </div>
 
-        <div class="row">
-            <div class="col-md-4 text-center">
+
+        <div class="row text-center">
+            <div class="col-lg-4 mx-auto">
                 <br>
                 <h5>輸入資料</h5>
                 <br>
             </div>
-            <div class="col-md-8 text-center">
-                <br>
-                <h5>結果</h5>
-            <div class="bs-component d-none" id="genImgBtnDiv">
-                <button id="genImgBtn" class="source-button btn btn-primary btn-xs" type="button"><i class="bi bi-code"></i>產生圖片</button>
-                <br>
-                <br>
-            </div>
-
-
         </div>
+        <div class="row text-center">
+            <div class="col-lg-12 mx-auto">
 
-        <div class="row">
-            <div class="col-lg-4 text-center">
-
-                <div class="bs-component">
+                <div class="bs-component col-lg-4 mx-auto" >
                     <input class="form-check-input" type="radio" name="typeRadios" id="typeSocialId" value="socialId">
                     <label class="form-check-label" for="typeSocialId">
                       身份證字號
@@ -240,12 +229,12 @@ function createCycleTableContent(tableBody, startValue, interval, numberOfRows, 
                       車牌號碼
                     </label>
                </div>
-              <div class="bs-component">
-                <label class="col-form-label mt-4" for="input">輸入:</label>
+              <div class="bs-component col-lg-4 mx-auto">
+                <label class="col-form-label mt-3" for="input">輸入:</label>
                 <input type="text" class="form-control" placeholder="" id="input">
              </div>
 
-             <div class="bs-component">
+             <div class="bs-component col-lg-4 mx-auto">
                 <br>
                 <button id="calculateBtn" class="source-button btn btn-primary btn-xs" type="button" tabindex="0" onclick="calculate()"><i class="bi bi-code"></i>產生表格</button>
                 <br>
@@ -253,8 +242,18 @@ function createCycleTableContent(tableBody, startValue, interval, numberOfRows, 
               </div>
 
             </div>
+        </div>
+        <div class="row">
 
-          <div class="col-lg-8 text-center" id="resultDiv" >
+            <div class="col-md-12 text-center">
+                <br>
+            <div class="bs-component d-none" id="genImgBtnDiv">
+                <button id="genImgBtn" class="source-button btn btn-primary btn-xs" type="button"><i class="bi bi-code"></i>產生圖片</button>
+                <br>
+                <br>
+            </div>
+
+          <div class="col-lg-12 text-center" id="resultDiv" >
             <table id="targetPositionTable" class="table-container">
                 <tbody>
                     <!-- Table content will be generated dynamically using JavaScript -->
