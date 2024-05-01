@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object to Table</title>
+
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+        th, td {
+            border: 1px solid #7C3C36;
+            padding: 8px;
+            text-align: center;
+            min-width: 55px;
+            color: #7C3C36;
+        }
+        th {
+            background-color: rgba(124, 60, 54, 0.07);
+
+        }
+
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 800px;
+        }
+        table {
+            border-collapse: collapse; /* 合并表格边框 */
+            margin: 0 0; /* 调整表格之间的间距 */
+        }
+    </style>
+
+<script src="./scripts/yiNumCalculate.js"></script>
+<script src="./scripts/yiNumLayout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+<script>
+
+    document.addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+            document.getElementById("calculateBtn").click();
+        }
+    });
+
+
+
+    function calculate(){
+      const calcService = new CalcService();
+      const layoutService = new LayoutService();
+
+
+
+      let type  = document.querySelector('input[name="typeRadios"]:checked').value;
+
+      let input = document.getElementById("input").value.replace(/\s/g, '');
+      if(input.length>0){
+        let result = calcService.calcResult(input);
+        cleanWholeTable();
+        genWholeTable(type, result);
+
+        document.getElementById("genImgBtnDiv").classList.remove("d-none");
+      }
+
+    }
+
+    function cleanWholeTable(){
+        const resultDiv = document.getElementById("resultDiv");
+        if (resultDiv) {
+            const tables = resultDiv.getElementsByTagName("table");
+            
+            for (let i = 0; i < tables.length; i++) {
+                const table = tables[i];
+                const tbody = table.querySelector("tbody");
+        
+                // 清空 tbody 的内容
+                tbody.innerHTML = "";
+            }
+
+           
+        }
+    }
+
+    function genWholeTable(type, data){
+
+    
+    let inputAry = data.convertInput.split("");
+    const inputRow = document.createElement('tr');
+
+    inputAry.forEach((item,index) => {
+        const cell = document.createElement('th');
+        cell.textContent = item;
+        //cell.colSpan = data['tmpInputChar2NumDigitAry'][index];
+        inputRow.appendChild(cell);
+    });
+
+    document.querySelector('#inputTable tbody').appendChild(inputRow);
+
+
+    if (JSON.stringify(inputAry) != JSON.stringify(data['tmpInputChar2NumAry'])) {
+        const inputChar2NumRow = document.createElement('tr');
+
+        data['tmpInputChar2NumAry'].forEach((item,index) => {
+            const cell = document.createElement('th');
+            cell.textContent = item;
+            inputChar2NumRow.appendChild(cell);
+        });
+
+        document.querySelector('#inputTable tbody').appendChild(inputChar2NumRow);
+    } 
+
+
+
+    let tempAry = data.tmpInputNumStr.split("");
+    if (JSON.stringify(data['tmpInputChar2NumAry']) != JSON.stringify(tempAry)) {
+        const inputTempRow = document.createElement('tr');
+        tempAry.forEach((item,index) => {
+            const cell = document.createElement('td');
+            cell.textContent = item;
+            inputTempRow.appendChild(cell);
+        });
+
+        document.querySelector('#tempTable tbody').appendChild(inputTempRow);
+    } 
+
+    const inputTempRow = document.createElement('tr');
+
+
+
+
+    if(type==="phoneNumber"){
+        const targetPositionRow = document.createElement('tr');
+        data['targetPositionAry'].forEach((item,index) => {
+            const cell = document.createElement('td');
+            cell.innerHTML = item.replace(/,/g, "<br>");;
+            targetPositionRow.appendChild(cell);
+        });
+     
+        document.querySelector('#targetPositionTable tbody').appendChild(targetPositionRow);
+    }
+
+    
+    const yiNumRow = document.createElement('tr');
+
+    data.tmpOutputAry.forEach(item => {
+        const cell = document.createElement('td');
+        cell.textContent = item.yiNum;
+        yiNumRow.appendChild(cell);
+    });
+
+    document.querySelector('#outputTable tbody').appendChild(yiNumRow);
+
+    // 创建第二行
+    const secondRow = document.createElement('tr');
+
+    data.tmpOutputAry.forEach(item => {
+        const cell = document.createElement('th');
+        cell.textContent = item.yiType;
+        secondRow.appendChild(cell);
+    });
+
+    document.querySelector('#outputTable tbody').appendChild(secondRow);
+
+
+    if((type==="socialId" || type==="phoneNumber")){
+    createCycleTableContent(document.querySelector('#bigCycleTable tbody'), 13, 5, 2, data.tmpOutputAry.length);
+    createCycleTableContent(document.querySelector('#smallCycleTable tbody'), 0, 1, Math.floor(100 / data.tmpOutputAry.length), data.tmpOutputAry.length);
+    }
+
+}
+
+
+
+// 创建表格内容的函数
+function createCycleTableContent(tableBody, startValue, interval, numberOfRows, numberOfColumns) {
+    
+    const row = document.createElement('tr');
+
+    for (let j = 0; j < numberOfColumns; j++) {
+        let cellValue ="";
+
+        for (let i = 0; i < numberOfRows; i++) {
+
+            cellValue += startValue + (interval*(j+(i*numberOfColumns))) + "<br>"
+        }
+
+        const cell = document.createElement('td');
+        cell.innerHTML = cellValue;
+        row.appendChild(cell);
+    }
+
+    tableBody.appendChild(row);
+
+}
+
+</script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row" >
+            <div class="col-lg-12 text-center">
+              <div>
+                <h1 >數 字 易 經</h1>
+              </div>
+            </div>
+          </div>
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <br>
+                <h5>輸入資料</h5>
+                <br>
+            </div>
+            <div class="col-md-8 text-center">
+                <br>
+                <h5>結果</h5>
+            <div class="bs-component d-none" id="genImgBtnDiv">
+                <button id="genImgBtn" class="source-button btn btn-primary btn-xs" type="button"><i class="bi bi-code"></i>產生圖片</button>
+                <br>
+                <br>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 text-center">
+
+                <div class="bs-component">
+                    <input class="form-check-input" type="radio" name="typeRadios" id="typeSocialId" value="socialId">
+                    <label class="form-check-label" for="typeSocialId">
+                      身份證字號
+                    </label>
+                    <input class="form-check-input" type="radio" name="typeRadios" id="typePhoneNumber" value="phoneNumber" checked="true">
+                    <label class="form-check-label" for="typePhoneNumber">
+                      手機號碼
+                    </label>
+                    <input class="form-check-input" type="radio" name="typeRadios" id="typeLicensePlateNumber" value="licensePlateNumber">
+                    <label class="form-check-label" for="typeLicensePlateNumber">
+                      車牌號碼
+                    </label>
+               </div>
+              <div class="bs-component">
+                <label class="col-form-label mt-4" for="input">輸入:</label>
+                <input type="text" class="form-control" placeholder="" id="input">
+             </div>
+
+             <div class="bs-component">
+                <br>
+                <button id="calculateBtn" class="source-button btn btn-primary btn-xs" type="button" tabindex="0" onclick="calculate()"><i class="bi bi-code"></i>產生表格</button>
+                <br>
+                <br>
+              </div>
+
+            </div>
+
+          <div class="col-lg-8 text-center" id="resultDiv" >
+            <table id="targetPositionTable" class="table-container">
+                <tbody>
+                    <!-- Table content will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>    
+            <table id="inputTable" class="table-container">
+                <tbody>
+                    <!-- Table content will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>
+        
+            <table id="tempTable" class="table-container">
+                <tbody>
+                    <!-- Table content will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>
+        
+            <table id="outputTable" class="table-container">
+                <tbody>
+                    <!-- Table content will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>
+        
+            <table id="bigCycleTable" class="table-container">
+                <tbody>
+                    <!-- Table content will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>
+            <table id="smallCycleTable" class="table-container">
+                <tbody>
+                    <!-- Table content will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>
+        
+        </div>
+
+    </div>
+
+    
+    <script>
+        window.onload = function() {
+            const input = document.getElementById("input");
+            input.focus();
+
+    document.querySelectorAll('input[name="typeRadios"]').forEach(radio => {
+        radio.addEventListener("click", function() {
+            const input = document.getElementById("input");
+                input.value="";
+                input.focus();
+        });
+    });
+            
+        };
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+    // 使用 DOM to Image 截圖
+    const triggerDomToImage = async ({ targetId }) => {
+
+
+    // DOM to Image
+    const el = document.getElementById(targetId);
+    const config = {
+        quality: 1
+    };
+    const dataUri = await domtoimage.toPng(el, config);
+
+    // 執行下載
+    const filename = 'Yi-Num_Table_' +  document.getElementById("input").value;
+    
+    const link = document.createElement('a');
+    link.download = filename + `.png`;
+    link.href = dataUri;
+    link.click();
+
+    }
+
+    document.getElementById(`genImgBtn`).addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        await triggerDomToImage({ targetId: `resultDiv`});
+    });
+
+    })
+    </script>
+</body>
+
+<footer></footer>
+<script>
+     const layoutService = new LayoutService();
+     layoutService.loadFooter();
+</script>
+</html>

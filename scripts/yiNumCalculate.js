@@ -286,17 +286,23 @@ class CalcService {
         result.convertInput = input.toUpperCase(); //upper case
         result.convertInput = result.convertInput.replace('-', ''); //remove "-"
         let inputAry = result.convertInput.split("");
+        let inputChar2NumDigitAry = [];
+        let inputChar2NumAry = [];
         let convertTmpAry = [];
         let convert2DigitsAry = [];
         inputAry.forEach(function (char) {
             if (!isNaN(char)) {
                 convertTmpAry.push(char);
+                inputChar2NumDigitAry.push(1);
+                inputChar2NumAry.push(char);
             }
             else {
                 let charCode = char.charCodeAt();
                 if (charCode >= 65) {
                     charCode = charCode - 64;
+                    inputChar2NumAry.push(charCode.toString());
                     let tmpAry = charCode.toString().split("");
+                    inputChar2NumDigitAry.push(tmpAry.length);
                     tmpAry.forEach(function (tmpChar) {
                         convertTmpAry.push(tmpChar);
                     });
@@ -305,6 +311,20 @@ class CalcService {
         });
         result.tmpInputNumStr = convertTmpAry.join("");
         result.tmpInputAry = convertTmpAry;
+        result.tmpInputChar2NumDigitAry = inputChar2NumDigitAry;
+        result.tmpInputChar2NumAry = inputChar2NumAry;
+
+        let targetPositionAry = [];
+        const targetPositionKeyReverseOrderAry = ['子女,財富,創業','自己','夫妻','父母,運氣','官運']
+        convertTmpAry.forEach(function (num, index) {
+            if(convertTmpAry.length-1-index<=targetPositionKeyReverseOrderAry.length-1){
+                targetPositionAry.push(targetPositionKeyReverseOrderAry[convertTmpAry.length-1-index])
+            }else{
+                targetPositionAry.push("")
+            }
+        });
+        result.targetPositionAry= targetPositionAry;
+
         //convert to 2Digits
         convertTmpAry.forEach(function (num, index) {
             if (index > 0) {
@@ -358,5 +378,3 @@ class CalcService {
         return specialNumAry;
     }
 }
-const calcService = new CalcService();
-calcService.calcResult("B221453774");
