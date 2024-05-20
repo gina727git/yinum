@@ -315,7 +315,7 @@ class CalcService {
         result.tmpInputChar2NumAry = inputChar2NumAry;
 
         let targetPositionAry = [];
-        const targetPositionKeyReverseOrderAry = ['子女,財富,創業','自己','夫妻','父母,運氣','官運']
+        const targetPositionKeyReverseOrderAry = ['子女,財富,創業','自己','夫妻','夫妻','父母,運氣','官運']
         convertTmpAry.forEach(function (num, index) {
             if(convertTmpAry.length-1-index<=targetPositionKeyReverseOrderAry.length-1){
                 targetPositionAry.push(targetPositionKeyReverseOrderAry[convertTmpAry.length-1-index])
