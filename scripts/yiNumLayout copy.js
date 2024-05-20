@@ -22,8 +22,8 @@ class LayoutService {
   
     // Create table content
     const tbody = document.createElement("tbody")
-    const keys = ["yiNum", "yiType"]
-    const keysHeader = ["數組", "磁場"]
+    const keys = ["yiNum", "yiType", "yiNumEnergyPercent"]
+    const keysHeader = ["數組", "磁場", "能量"]
   
     keys.forEach((key, keyIndex) => {
       const row = document.createElement("tr")
@@ -70,14 +70,6 @@ class LayoutService {
       yiTypeElement.className = "badge bg-danger"
       yiTypeElement.textContent = result.resultYiType.yiType + "格"
       divTitleElement.appendChild(yiTypeElement)
-
-      var spaceText = document.createTextNode('   ');
-      divTitleElement.appendChild(spaceText);
-      var newLink = document.createElement('a');
-      newLink.href = result.resultYiType.yiUrl;
-      newLink.textContent = '解說';
-      newLink.target = '_blank';
-      divTitleElement.appendChild(newLink);
     }
   
     if (resultDiv) {

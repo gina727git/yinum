@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>GINA YI-NUMBER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <script src="./scripts/yiNumCalculate.js"></script>
+    <script src="./scripts/yiNumLayout.js"></script>
+    <script>
+
+        document.addEventListener("keydown", function(event) {
+            if (event.keyCode === 13) {
+                document.getElementById("calculateBtn").click();
+            }
+        });
+
+        function calculate(){
+          const calcService = new CalcService();
+          const layoutService = new LayoutService();
+
+          let socialId = document.getElementById("socialId").value.replace(/\s/g, '');
+          let phoneNumber = document.getElementById("phoneNumber").value.replace(/\s/g, '');
+          let licensePlateNumber = document.getElementById("licensePlateNumber").value.replace(/\s/g, '');
+
+          if(socialId.length>0){
+            let socialIdResult = calcService.calcResult(socialId);
+            layoutService.createTable(socialIdResult, "tableName", "socialIdDiv", "身份證字號");
+          }else{
+            layoutService.cleanTable("socialIdDiv");
+          }
+
+          if(phoneNumber.length>0){
+            let phoneNumberResult = calcService.calcResult(phoneNumber);
+            layoutService.createTable(phoneNumberResult, "tableName", "phoneNumberDiv", "手機號碼");
+          }else{
+            layoutService.cleanTable("phoneNumberDiv");
+          }
+
+
+          if(licensePlateNumber.length>0){
+            let licensePlateNumberResult = calcService.calcResult(licensePlateNumber);
+            layoutService.createTable(licensePlateNumberResult, "tableName", "licensePlateNumberDiv", "車牌號碼");
+          }else{
+            layoutService.cleanTable("licensePlateNumberDiv");
+          }
+
+        }
+
+
+    </script>
+    </head>
+    <body>
+
+    <div class="container">
+    <div class="row" >
+      <div class="col-lg-12 text-center">
+        <div>
+          <h1 id="forms">數 字 易 經</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+
+        <div class="bs-component">
+          <form>
+            <div>
+                <label class="col-form-label mt-4" for="inputSocialId">身份證字號:</label>
+                <input type="text" class="form-control" placeholder="A123456789" id="socialId">
+            </div>
+            <div>
+              <label class="col-form-label mt-4" for="inputPhoneNumber">手機號碼:</label>
+              <input type="text" class="form-control" placeholder="0912345678" id="phoneNumber">
+          </div>           
+            <div>
+                <label class="col-form-label mt-4" for="inputLicensePlateNumber">車牌號碼:</label>
+                <input type="text" class="form-control" placeholder="ABC0000" id="licensePlateNumber">
+            </div>
+            <div>
+                <br>
+                <button id="calculateBtn" class="source-button btn btn-primary btn-xs" type="button" tabindex="0" onclick="calculate()"><i class="bi bi-code"></i>立即測算</button>
+                <br>
+                <br>
+              </div>
+          </form>
+        </div>
+        </div>
+    </div>
+
+    <div id="socialIdDiv" class="bs-component">
+    </div>
+
+
+    <div id="phoneNumberDiv" class="bs-component">
+    </div>
+
+    <div id="licensePlateNumberDiv" class="bs-component">
+    </div>
+
+    </body>
+       
+    <footer id="footer">
+      <div class="row">
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <p id="copyright">
+            &copy; <span id="currentYear"></span> Gina Huang. All rights reserved.
+          </p>
+          <p>Made by <a href="https://github.com/gina727git/yinum" target="_blank">Gina Huang</a>.
+          Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>.</p>
+          <p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a href="https://icons.getbootstrap.com/" rel="nofollow">Bootstrap Icons</a>. Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+
+        </div>
+      </div>
+    </footer>
+    <script>
+        const currentYear = new Date().getFullYear();
+        document.getElementById("currentYear").textContent = currentYear;
+
+    </script>
+</html>

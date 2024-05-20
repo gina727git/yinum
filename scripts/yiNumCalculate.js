@@ -206,6 +206,7 @@ class CalcService {
         yiTypeObj.yiType = '禍害';
         yiTypeObj.yiTypeExtend = '伏(害)';
         yiTypeObj.yiBasicLabel = '口才';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-huo_hai_ci_chang';
         return yiTypeObj;
     }
     getYiType_六煞() {
@@ -213,6 +214,7 @@ class CalcService {
         yiTypeObj.yiType = '六煞';
         yiTypeObj.yiTypeExtend = '伏(煞)';
         yiTypeObj.yiBasicLabel = '公關、感情';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-liu_sha_ci_chang'
         return yiTypeObj;
     }
     getYiType_五鬼() {
@@ -220,6 +222,7 @@ class CalcService {
         yiTypeObj.yiType = '五鬼';
         yiTypeObj.yiTypeExtend = '伏(鬼)';
         yiTypeObj.yiBasicLabel = '聰明';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-wu_gui_ci_chang';
         return yiTypeObj;
     }
     getYiType_絕命() {
@@ -227,6 +230,7 @@ class CalcService {
         yiTypeObj.yiType = '絕命';
         yiTypeObj.yiTypeExtend = '伏(命)';
         yiTypeObj.yiBasicLabel = '大起大落';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-jue_ming_ci_chang';
         return yiTypeObj;
     }
     getYiType_生氣() {
@@ -234,6 +238,7 @@ class CalcService {
         yiTypeObj.yiType = '生氣';
         yiTypeObj.yiTypeExtend = '伏(生)';
         yiTypeObj.yiBasicLabel = '樂觀';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-sheng_qi_ci_chang';
         return yiTypeObj;
     }
     getYiType_天醫() {
@@ -241,6 +246,7 @@ class CalcService {
         yiTypeObj.yiType = '天醫';
         yiTypeObj.yiTypeExtend = '伏(天)';
         yiTypeObj.yiBasicLabel = '財富、老闆';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-tian_yi_ci_chang';
         return yiTypeObj;
     }
     getYiType_延年() {
@@ -248,6 +254,7 @@ class CalcService {
         yiTypeObj.yiType = '延年';
         yiTypeObj.yiTypeExtend = '伏(延)';
         yiTypeObj.yiBasicLabel = '理財';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-yan_nian_ci_chang';
         return yiTypeObj;
     }
     getYiType_伏位() {
@@ -255,6 +262,7 @@ class CalcService {
         yiTypeObj.yiType = '伏位';
         yiTypeObj.yiTypeExtend = '伏位';
         yiTypeObj.yiBasicLabel = '穩定';
+        yiTypeObj.yiUrl = 'https://luck231.com/i-chings-eight-magnetic-fields/#ba_zhong_neng_liang_jie_shuo-fu_wei_ci_chang';
         return yiTypeObj;
     }
     getYiNumResult(input2Digits) {
