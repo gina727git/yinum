@@ -56,7 +56,7 @@ class LayoutService {
           
         }else if (key === "yiHiddenType") {
           if(result.hiddenOutputAry[index].yiType!=undefined){
-            cell.textContent  += result.hiddenOutputAry[index].yiType 
+            cell.textContent  += result.hiddenOutputAry[index].yiNum  + result.hiddenOutputAry[index].yiType 
           }
         } else {
           cell.textContent = item[key]
