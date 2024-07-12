@@ -342,6 +342,8 @@ class CalcService {
         result.tmpInputAry = convert2DigitsAry;
         result.tmpOutputAry = [];
         var lastNonXX;
+        result.hiddenOutputAry = [];
+
         convert2DigitsAry.forEach((item, index) => {
             console.log("item", item);
             console.log("item currentset", this.yiNumMap.get(item));
@@ -357,11 +359,40 @@ class CalcService {
             }
             result.tmpOutputAry.push(currentSet);
         });
+
+
+        result.tmpInputAry.forEach((item, index) => {
+            console.log("tmpInputAry item", item);
+
+
+            if (result.tmpInputAry[index][0] === '5' || result.tmpInputAry[index][0] === '0') {
+                let newStr = '';
+                if (index > 0) {
+                    newStr = result.tmpInputAry[index - 1][0] + result.tmpInputAry[index][1];
+                    var currentSet = Object.assign({}, this.yiNumMap.get(newStr));
+                    var currentYiNum = currentSet.yiNum;
+
+                    if (currentSet.yiType == '伏位') {
+                        currentSet = Object.assign({},);
+                    }
+                    result.hiddenOutputAry.push(currentSet);
+                }else{
+                    result.hiddenOutputAry.push({});
+                }
+            } else {
+                result.hiddenOutputAry.push({});
+            }
+           
+        });
+
+        console.log("hiddenOutputAry",result.hiddenOutputAry);
+
         result.resultAry = result.tmpOutputAry;
         result.resultStr = result.resultAry.map(item => item.yiType).toString();
         result.resultYiType = this.getResultYiType(result.resultAry);
         return result;
     }
+
     getResultYiType(resultAry) {
         //找出現次數最多的
         let resultYiType = new yiType();
@@ -381,6 +412,9 @@ class CalcService {
         resultYiType = this.getYiTypeByKey(yi);
         return resultYiType;
     }
+
+
+
     getSpecialNumAry(resultAry) {
         const specialNumAry = new Array();
         return specialNumAry;

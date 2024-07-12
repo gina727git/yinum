@@ -22,10 +22,17 @@ class LayoutService {
   
     // Create table content
     const tbody = document.createElement("tbody")
-    const keys = ["yiNum", "yiType"]
-    const keysHeader = ["數組", "磁場"]
+    const keys = ["yiNum", "yiType","yiHiddenType"]
+    const keysHeader = ["數組", "磁場","隱藏"]
   
     keys.forEach((key, keyIndex) => {
+
+      if (key === "yiHiddenType" && result.hiddenOutputAry.some(obj => obj.yiType && obj.yiType.trim() !== '')
+    || key!="yiHiddenType")
+      {
+
+
+
       const row = document.createElement("tr")
       const tdKey = document.createElement("td")
       tdKey.textContent = keysHeader[keyIndex]
@@ -45,12 +52,25 @@ class LayoutService {
           } else {
             cell.textContent = item[key]
           }
+
+          
+        }else if (key === "yiHiddenType") {
+          if(result.hiddenOutputAry[index].yiType!=undefined){
+            cell.textContent  += result.hiddenOutputAry[index].yiType 
+          }
         } else {
           cell.textContent = item[key]
         }
+
+
+       
+
         row.appendChild(cell)
       })
       tbody.appendChild(row)
+
+
+      }
     })
     table.appendChild(tbody)
   
