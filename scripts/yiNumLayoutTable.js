@@ -119,18 +119,24 @@ class LayoutService {
 
 
       const hiddenRow = document.createElement('tr');
+      let needToShowHiddenRow = false;
   
       data.hiddenOutputAry.forEach((item,index) => {
 
         if(index>0){
           const cell = document.createElement('th');
           cell.textContent = item.yiType;
+          if(item.yiType!=null){
+            needToShowHiddenRow = true;
+          }
           hiddenRow.appendChild(cell);
         }
       });
   
+      if(needToShowHiddenRow){
       selector = `#${tableIdPrefix}HiddenOutputTable tbody`;
       document.querySelector(selector).appendChild(hiddenRow);
+      }
   
   
       const br = document.createElement('br');
