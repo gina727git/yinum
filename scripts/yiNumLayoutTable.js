@@ -29,7 +29,6 @@ class LayoutService {
       const divTitleElement = document.createElement("h5")
       divTitleElement.textContent = divTitle + ": " + data.input + "    "
     
-      if(divId==="socialIdDiv"){
 
         data.resultYiTypes.forEach(resultYiType => {
           // 創建一個新的元素來顯示 yiType
@@ -53,7 +52,6 @@ class LayoutService {
           //divTitleElement.appendChild(lineBreak);
         });
      
-      }
     
       document.getElementById(tableIdPrefix + "HeaderDiv").appendChild(divTitleElement);
     
