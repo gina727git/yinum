@@ -31,10 +31,10 @@ class LayoutService {
     
       if(divId==="socialIdDiv"){
 
-        data.resultYiTypes.forEach(yiType => {
+        data.resultYiTypes.forEach(resultYiType => {
           // 創建一個新的元素來顯示 yiType
           var yiTypeElement = document.createElement('span');
-          yiTypeElement.textContent = yiType.yiType + "格";
+          yiTypeElement.textContent = resultYiType.yiType + "格";
           divTitleElement.appendChild(yiTypeElement);
 
           // 添加空白文本
@@ -43,7 +43,7 @@ class LayoutService {
 
           // 創建新的鏈接元素
           var newLink = document.createElement('a');
-          newLink.href = yiType.yiUrl; // 使用當前迴圈的 yiUrl
+          newLink.href = resultYiType.yiUrl; // 使用當前迴圈的 yiUrl
           newLink.textContent = '解說';
           newLink.target = '_blank';
           divTitleElement.appendChild(newLink);
