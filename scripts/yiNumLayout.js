@@ -85,20 +85,28 @@ class LayoutService {
     const divTitleElement = document.createElement("h5")
     divTitleElement.textContent = divTitle + ": " + result.input + "    "
   
-    if(divId==="socialIdDiv"){
-      const yiTypeElement = document.createElement("span")
-      yiTypeElement.className = "badge bg-danger"
-      yiTypeElement.textContent = result.resultYiType.yiType + "格"
-      divTitleElement.appendChild(yiTypeElement)
 
-      var spaceText = document.createTextNode('   ');
-      divTitleElement.appendChild(spaceText);
-      var newLink = document.createElement('a');
-      newLink.href = result.resultYiType.yiUrl;
-      newLink.textContent = '解說';
-      newLink.target = '_blank';
-      divTitleElement.appendChild(newLink);
-    }
+      result.resultYiTypes.forEach(resultYiType => {
+        // 創建一個新的元素來顯示 yiType
+        var yiTypeElement = document.createElement('span');
+        yiTypeElement.textContent = resultYiType.yiType + "格";
+        divTitleElement.appendChild(yiTypeElement);
+
+        // 添加空白文本
+        var spaceText = document.createTextNode('   ');
+        divTitleElement.appendChild(spaceText);
+
+        // 創建新的鏈接元素
+        var newLink = document.createElement('a');
+        newLink.href = resultYiType.yiUrl; // 使用當前迴圈的 yiUrl
+        newLink.textContent = '解說';
+        newLink.target = '_blank';
+        divTitleElement.appendChild(newLink);
+
+        // 添加換行或其他分隔符（可選）
+        //var lineBreak = document.createElement('br');
+        //divTitleElement.appendChild(lineBreak);
+      });
   
     if (resultDiv) {
       resultDiv.appendChild(divTitleElement)

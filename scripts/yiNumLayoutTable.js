@@ -52,20 +52,7 @@ class LayoutService {
           //var lineBreak = document.createElement('br');
           //divTitleElement.appendChild(lineBreak);
         });
-/*
-        const yiTypeElement = document.createElement("span")
-        yiTypeElement.className = "badge bg-danger"
-        yiTypeElement.textContent = data.resultYiType.yiType + "格"
-        divTitleElement.appendChild(yiTypeElement)
-  
-        var spaceText = document.createTextNode('   ');
-        divTitleElement.appendChild(spaceText);
-        var newLink = document.createElement('a');
-        newLink.href = data.resultYiType.yiUrl;
-        newLink.textContent = '解說';
-        newLink.target = '_blank';
-        divTitleElement.appendChild(newLink);
-*/        
+     
       }
     
       document.getElementById(tableIdPrefix + "HeaderDiv").appendChild(divTitleElement);

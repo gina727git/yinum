@@ -416,10 +416,11 @@ class CalcService {
 
         // 2. 獲取最大值
         let maxValue = sortedEntries[0][1];
+        console.log("maxValue",maxValue);
 
         // 3. 收集所有具有最大值的鍵
         let keysWithMaxValue = [...tempMap].filter(([key, value]) => value === maxValue).map(([key]) => key);
-
+        console.log("keysWithMaxValue",keysWithMaxValue);
 
         let resultYiTypes = keysWithMaxValue.map(key => this.getYiTypeByKey(key));
 
