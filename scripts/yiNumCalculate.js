@@ -389,11 +389,11 @@ class CalcService {
 
         result.resultAry = result.tmpOutputAry;
         result.resultStr = result.resultAry.map(item => item.yiType).toString();
-        result.resultYiType = this.getResultYiType(result.resultAry);
+        result.resultYiTypes = this.getResultYiTypes(result.resultAry);
         return result;
     }
 
-    getResultYiType(resultAry) {
+    getResultYiTypes(resultAry) {
         //找出現次數最多的
         let resultYiType = new yiType();
         let yiTypeAry = resultAry.map((item) => item.yiType);
@@ -409,8 +409,22 @@ class CalcService {
         }, new Map());
         let mapSort = new Map([...tempMap.entries()].sort((a, b) => b[1] - a[1]));
         let yi = ([...mapSort][0][0]);
-        resultYiType = this.getYiTypeByKey(yi);
-        return resultYiType;
+
+
+        // 1. 先將 tempMap 轉換為陣列並排序
+        let sortedEntries = [...tempMap.entries()].sort((a, b) => b[1] - a[1]);
+
+        // 2. 獲取最大值
+        let maxValue = sortedEntries[0][1];
+
+        // 3. 收集所有具有最大值的鍵
+        let keysWithMaxValue = [...tempMap].filter(([key, value]) => value === maxValue).map(([key]) => key);
+
+
+        let resultYiTypes = keysWithMaxValue.map(key => this.getYiTypeByKey(key));
+
+       
+        return resultYiTypes;
     }
 
 
