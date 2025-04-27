@@ -160,6 +160,20 @@
     document.querySelector('#outputTable tbody').appendChild(secondRow);
 
 
+
+    const yiNumHiddenRow = document.createElement('tr');
+
+    data.hiddenOutputAry.forEach((item, index) => {
+        if(index !=1){
+        const cell = document.createElement('td');
+        cell.textContent = item.yiType;
+        yiNumHiddenRow.appendChild(cell);
+         }
+    });
+
+    document.querySelector('#hiddenOutputTable tbody').appendChild(yiNumHiddenRow);
+
+
     if((type==="socialId" || type==="phoneNumber")){
     createCycleTableContent(document.querySelector('#bigCycleTable tbody'), 13, 5, 2, data.tmpOutputAry.length);
     createCycleTableContent(document.querySelector('#smallCycleTable tbody'), 0, 1, Math.floor(100 / data.tmpOutputAry.length), data.tmpOutputAry.length);
@@ -276,6 +290,12 @@ function createCycleTableContent(tableBody, startValue, interval, numberOfRows, 
                     <!-- Table content will be generated dynamically using JavaScript -->
                 </tbody>
             </table>
+
+            <table id="hiddenOutputTable" class="table-container">
+                <tbody>
+                    <!-- Table content will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>            
         
             <table id="bigCycleTable" class="table-container">
                 <tbody>
