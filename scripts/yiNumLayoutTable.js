@@ -170,7 +170,7 @@ class LayoutService {
     keys.forEach((key, keyIndex) => {
 
       if (key === "yiHiddenType" && result.hiddenOutputAry.some(obj => obj.yiType && obj.yiType.trim() !== '')
-    || key!="yiHiddenType")
+    )
       {
 
 

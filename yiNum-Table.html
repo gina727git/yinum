@@ -162,10 +162,11 @@
 
 
     const yiNumHiddenRow = document.createElement('tr');
-
+    console.log("hiddenOutputAry:" , data.hiddenOutputAry);
     data.hiddenOutputAry.forEach((item, index) => {
-        if(index !=1){
-        const cell = document.createElement('td');
+        if(index !=0){
+        const cell = document.createElement('th');
+        console.log("dddd....", item.yiType);
         cell.textContent = item.yiType;
         yiNumHiddenRow.appendChild(cell);
          }
