@@ -126,26 +126,9 @@ class LayoutService {
       document.querySelector(selector).appendChild(secondRow);
 
 
-
-      const hiddenRow = document.createElement('tr');
-      let needToShowHiddenRow = false;
-  
-      data.hiddenOutputAry.forEach((item,index) => {
-
-        if(index>0){
-          const cell = document.createElement('th');
-          cell.textContent = item.yiType;
-          if(item.yiType!=null){
-            needToShowHiddenRow = true;
-          }
-          hiddenRow.appendChild(cell);
-        }
-      });
-  
-      if(needToShowHiddenRow){
+      const hiddenRow = this.createHiddenRowFromSegments(data.hiddenOutputArys);
       selector = `#${tableIdPrefix}HiddenOutputTable tbody`;
-      document.querySelector(selector).appendChild(hiddenRow);
-      }
+      document.querySelector(selector).innerHTML = hiddenRow;
   
   
       const br = document.createElement('br');
@@ -169,8 +152,9 @@ class LayoutService {
   
     keys.forEach((key, keyIndex) => {
 
-      if (key === "yiHiddenType" && result.hiddenOutputAry.some(obj => obj.yiType && obj.yiType.trim() !== '')
-    )
+      if (key === "yiHiddenType" 
+        && result.hiddenOutputAry.some(obj => obj.yiType && obj.yiType.trim() !== '')
+        )
       {
 
 
@@ -247,4 +231,55 @@ class LayoutService {
       resultDiv.appendChild(table)
     }
   }
+
+
+
+
+/**
+ * 根據分段結果，生成兩列 HTML <tr>。
+ * 第一列用於顯示分組結果，第二列則補齊單元格以保持表格結構對齊。
+ *
+ * @param {Array<Array<string|number>>} segments - 從 findSegments 得到的陣列，格式為 [yiNumInfo, count] 或 []。
+ * @returns {string} - 包含兩列 <tr> 和 <th> 元素的 HTML 字串。
+ */
+createHiddenRowFromSegments(segments) {
+  // 如果輸入無效，返回兩列空行以維持表格結構
+  if (!Array.isArray(segments) || segments.length === 0 || segments.every(item => item.length === 0)) {
+    return "";
+  }
+
+  let mainRowContent = '';
+  let spacerRowContent = '';
+
+  segments.forEach(item => {
+    // 檢查陣列是否為空
+    if (item.length === 0) {
+      // 若為空陣列 `[]`，代表一個單元格
+      mainRowContent += '<th></th>';
+      spacerRowContent += `<th style="padding: 0; height: 0;"></th>`;
+    } else {
+      // 若為 [yiNumInfo, count] 格式
+      const [yiNumInfo, count] = item;
+      const colSpan = count + 1;
+
+      // 假設 yiNumInfo 是一個包含 yiType 屬性的物件或字串
+      let yiTypeContent = '';
+      if (typeof yiNumInfo === 'object' && yiNumInfo.hasOwnProperty('yiType')) {
+        yiTypeContent = yiNumInfo.yiType;
+      } else {
+        yiTypeContent = yiNumInfo;
+      }
+
+      // 產生主行的帶有 colspan 的 <th>
+      mainRowContent += `<th colspan=${colSpan}>${yiTypeContent}</th>`;
+
+      // 產生第二行用於對齊的 <th>
+      for (let i = 0; i < colSpan; i++) {
+        spacerRowContent += `<th style="padding: 0; height: 0;"></th>`;
+      }
+    }
+  });
+
+  return `<tr>${mainRowContent}</tr><tr>${spacerRowContent}</tr>`;
+}
 }
