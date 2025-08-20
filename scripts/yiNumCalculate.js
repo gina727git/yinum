@@ -318,6 +318,7 @@ class CalcService {
             }
         });
         result.tmpInputNumStr = convertTmpAry.join("");
+        console.log("tmpInputNumStr",result.tmpInputNumStr);
         result.tmpInputAry = convertTmpAry;
         result.tmpInputChar2NumDigitAry = inputChar2NumDigitAry;
         result.tmpInputChar2NumAry = inputChar2NumAry;
@@ -387,6 +388,10 @@ class CalcService {
 
         console.log("hiddenOutputAry",result.hiddenOutputAry);
 
+        var hiddenOutputArys = this.findHiddenSegments(result.tmpInputNumStr);
+        console.log("hiddenOutputArys",hiddenOutputArys);
+        result.hiddenOutputArys = hiddenOutputArys;
+
         result.resultAry = result.tmpOutputAry;
         result.resultStr = result.resultAry.map(item => item.yiType).toString();
         result.resultYiTypes = this.getResultYiTypes(result.resultAry);
@@ -434,4 +439,176 @@ class CalcService {
         const specialNumAry = new Array();
         return specialNumAry;
     }
+
+    /**
+ * 根據特定的規則，處理數字字串並產生一個包含陣列的結果。
+ * * 邏輯規則:
+ * 1. 有效組合：尋找一個非 0/5 的數字、一個連續的 0/5 段落、以及其後方緊鄰的另一個非 0/5 數字。
+ * - 如果找到，將前後兩個數字合併成一個新數字，並與中間 0/5 的個數一起輸出，格式為 [新數字, 個數]。
+ * 2. 其他字元：任何不屬於有效組合的字元，都將獨立產生一個空的陣列 []。
+ * * @param {string} inputString 
+ * @returns {Array<Array<number|string>>}
+ */
+findSegments(inputString) {
+  const results = [];
+  let i = 0; // 主索引，用於遍歷整個字串
+
+  // 標記已經被有效組合使用的字元位置，避免重複處理
+  const usedIndices = new Set();
+
+  while (i < inputString.length) {
+    const char = inputString[i];
+
+    // 如果當前字元是 '0' 或 '5'，代表可能是一個有效組合的中心
+    if (char === '0' || char === '5') {
+      let j = i;
+      let count = 0;
+
+      // 找出連續的 0/5 段落
+      while (j < inputString.length && (inputString[j] === '0' || inputString[j] === '5')) {
+        count++;
+        j++;
+      }
+
+      // 檢查前後是否都是非 0/5 的數字
+      const prevChar = inputString[i - 1];
+      const nextChar = inputString[j];
+      
+      // 判斷是否為有效組合
+      if (prevChar && (prevChar !== '0' && prevChar !== '5') && nextChar && (nextChar !== '0' && nextChar !== '5')) {
+        // 如果是有效組合，將結果存入 results 陣列
+        const newNumber = Number(prevChar + nextChar);
+        results.push([newNumber, count]);
+        
+        // 將本次組合中的字元標記為已使用
+        usedIndices.add(i - 1);
+        usedIndices.add(j);
+        for (let k = i; k < j; k++) {
+          usedIndices.add(k);
+        }
+      }
+
+      // 跳過已經處理過的 0/5 段落
+      i = j;
+    } else {
+      // 如果是非 0/5 的數字，直接檢查下一個字元
+      i++;
+    }
+  }
+
+  // 遍歷所有字元，將未被使用的字元加入結果陣列
+  for (let k = 0; k < inputString.length; k++) {
+    if (!usedIndices.has(k)) {
+      results.push([]);
+    }
+  }
+  
+  // 根據你的範例，結果順序可能需要調整，通常我們會按原始順序輸出。
+  // 由於你的範例會將空陣列穿插在結果中，所以需要額外排序。
+  // 我們先儲存每個結果的原始位置
+  const finalResults = [];
+  const validCombos = [];
+  const emptyArrays = [];
+
+  for (let k = 0; k < inputString.length; k++) {
+    if (!usedIndices.has(k)) {
+      emptyArrays.push({ index: k, value: [] });
+    }
+  }
+
+  // 重新遍歷一次，找出有效的組合，並將它們和空陣列排序
+  i = 0;
+  while (i < inputString.length) {
+    const char = inputString[i];
+    if (char === '0' || char === '5') {
+      let j = i;
+      let count = 0;
+      while (j < inputString.length && (inputString[j] === '0' || inputString[j] === '5')) {
+        count++;
+        j++;
+      }
+      const prevChar = inputString[i - 1];
+      const nextChar = inputString[j];
+      if (prevChar && (prevChar !== '0' && prevChar !== '5') && nextChar && (nextChar !== '0' && nextChar !== '5')) {
+        const newNumber = Number(prevChar + nextChar);
+        validCombos.push({ index: i - 1, value: [newNumber, count] });
+        i = j; // 跳過已處理的部分
+      } else {
+        i++;
+      }
+    } else {
+      i++;
+    }
+  }
+
+  // 將所有結果合併並排序
+  let validIndex = 0;
+  let emptyIndex = 0;
+  let currentStringIndex = 0;
+
+  while(currentStringIndex < inputString.length) {
+      if (validIndex < validCombos.length && currentStringIndex === validCombos[validIndex].index) {
+          finalResults.push(validCombos[validIndex].value);
+          // 跳過該組合所佔的字元長度 (前後各一，中間是 0/5 個數)
+          currentStringIndex += validCombos[validIndex].value[1] + 2;
+          validIndex++;
+      } else if (emptyIndex < emptyArrays.length && currentStringIndex === emptyArrays[emptyIndex].index) {
+          finalResults.push(emptyArrays[emptyIndex].value);
+          currentStringIndex++;
+          emptyIndex++;
+      } else {
+          currentStringIndex++;
+      }
+  }
+
+  return finalResults;
+}
+
+
+findHiddenSegments(inputString) {
+  const results = [];
+  const usedIndices = new Set();
+
+  // 處理有效組合並標記已使用的字元
+  for (let i = 0; i < inputString.length; i++) {
+    const char = inputString[i];
+    if (char === '0' || char === '5') {
+      let j = i;
+      let count = 0;
+      while (j < inputString.length && (inputString[j] === '0' || inputString[j] === '5')) {
+        count++;
+        j++;
+      }
+
+      const prevChar = inputString[i - 1];
+      const nextChar = inputString[j];
+
+      if (prevChar && (prevChar !== '0' && prevChar !== '5') && nextChar && (nextChar !== '0' && nextChar !== '5')) {
+        const newStr = prevChar + nextChar;
+        const newNumValue = this.yiNumMap.get(newStr) || newStr; // 使用 Map 查找值，若不存在則保留原字串
+        results.push({ index: i - 1, value: [newNumValue, count] });
+
+        usedIndices.add(i - 1);
+        usedIndices.add(j);
+        for (let k = i; k < j; k++) {
+          usedIndices.add(k);
+        }
+      }
+      i = j - 1; // 調整主索引，跳過已處理的 0/5 段落
+    }
+  }
+
+  // 將未使用的字元產生空陣列
+  for (let i = 0; i < inputString.length; i++) {
+    if (!usedIndices.has(i)) {
+      results.push({ index: i, value: [] });
+    }
+  }
+
+  // 根據原始字串位置對結果進行排序
+  results.sort((a, b) => a.index - b.index);
+  return results.map(item => item.value);
+}
+ 
+
 }
