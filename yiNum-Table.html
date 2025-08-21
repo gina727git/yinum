@@ -32,6 +32,7 @@
 
 <script src="./scripts/yiNumCalculate.js"></script>
 <script src="./scripts/yiNumLayout.js"></script>
+<script src="./scripts/yiNumLayoutTable.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 <script>
 
@@ -46,6 +47,8 @@
     function calculate(){
       const calcService = new CalcService();
       const layoutService = new LayoutService();
+     
+
 
 
 
@@ -80,7 +83,7 @@
     }
 
     function genWholeTable(type, data){
-
+        const layoutTableService = new LayoutTableService();
     
     let inputAry = data.convertInput.split("");
     const inputRow = document.createElement('tr');
@@ -172,7 +175,7 @@
 
     */
 
-    const yiNumHiddenRow = createHiddenRowFromSegments(data.hiddenOutputArys);
+    const yiNumHiddenRow = layoutTableService.createHiddenRowFromSegments(data.hiddenOutputArys);
     document.querySelector('#hiddenOutputTable tbody').innerHTML = yiNumHiddenRow;
 
 

@@ -1,5 +1,5 @@
 "use strict";
-class LayoutService {
+class LayoutTableService {
     constructor() {
     }
 
@@ -234,7 +234,6 @@ class LayoutService {
 
 
 
-
 /**
  * 根據分段結果，生成兩列 HTML <tr>。
  * 第一列用於顯示分組結果，第二列則補齊單元格以保持表格結構對齊。
@@ -282,4 +281,5 @@ createHiddenRowFromSegments(segments) {
 
   return `<tr>${mainRowContent}</tr><tr>${spacerRowContent}</tr>`;
 }
+
 }
